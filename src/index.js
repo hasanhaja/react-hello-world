@@ -44,8 +44,28 @@ const NotHiring = () => (
 );
 
 // State should be managed at the root node/component, in this case the Library component so things don't get muddled.
+// Component life cycle components are only available in the class syntax
 class Library extends Component {
-  state = { open: true, freeBookmark: true, hiring: false };
+  // static property
+  state = {
+    open: true,
+    freeBookmark: true,
+    hiring: false,
+    data: [],
+    loading: false,
+  };
+
+  // Todo: Can this become an async function?
+  componentDidMount() {
+    this.setState({ loading: true });
+    fetch("https://hplussport.com/api/products/order/price/sort/asc/qty/1")
+      .then((data) => data.json())
+      .then((data) => this.setState({ data, loading: false }));
+  }
+
+  componentDidUpdate() {
+    console.log("This component just updated.");
+  }
 
   // In order to bind this now, you can use an arrow function. They auto bind.
   toggleOpenClosed = () => {
@@ -60,6 +80,24 @@ class Library extends Component {
     return (
       <div>
         {this.state.hiring ? <Hiring /> : <NotHiring />}
+
+        {this.state.loading ? (
+          "loading..."
+        ) : (
+          <div>
+            {this.state.data.map((product, id) => {
+              return (
+                <div key={id}>
+                  <h3>Library product of the week</h3>
+                  <h4>{product.name}</h4>
+                  <img src={product.image} height={100} />
+                  <h4 align="center">£{product.price}</h4>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
         <h1>The Libary is {this.state.open ? "open" : "closed"}</h1>
         <button onClick={this.toggleOpenClosed}>Open/Close</button>
         {books.map((book, i) => (
