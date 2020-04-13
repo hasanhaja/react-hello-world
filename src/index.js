@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
+import PropTypes from "prop-types";
 
 const bookList = [
   { title: "The Sun Also Rises", author: "Ernest Hemingway", pages: 260 },
@@ -128,6 +129,19 @@ class Library extends Component {
     );
   }
 }
+
+// This is helpful in debugging so you can specify what the prop is supposed to look like.
+Library.propTypes = {
+  books: PropTypes.array,
+};
+
+// This is type checking, basically
+Book.propTypes = {
+  title: PropTypes.string,
+  author: PropTypes.string,
+  pages: PropTypes.number,
+  freeBookmark: PropTypes.bool,
+};
 
 // ReactDOM.render()
 render(<Library books={bookList} />, document.getElementById("root"));
