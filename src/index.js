@@ -28,29 +28,14 @@ const Book = ({ title, author, pages }) => {
 
 // You need the component to be a class to have State and use the constructor method.
 class Library extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-    };
+  state = { open: false };
 
-    // Whenever using a constructor method, you need to bind "this"
-    // This statement will make "this" accessible within the context of
-    // the below method.
-    this.toggleOpenClosed = this.toggleOpenClosed.bind(this);
-  }
-
-  toggleOpenClosed() {
-    // setState is asynchronous.
-    // So if you're relying on previous state, you can use a callback function.
-    // this.setState({
-    //   open: !this.state.open,
-    // });
-
+  // In order to bind this now, you can use an arrow function. They auto bind.
+  toggleOpenClosed = () => {
     this.setState((prevState) => ({
       open: !prevState.open,
     }));
-  }
+  };
 
   render() {
     console.log(this.state);
