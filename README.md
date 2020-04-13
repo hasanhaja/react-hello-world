@@ -1,4 +1,8 @@
+# Hello world
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+This project is mainly a playground to learn React while following along the LinkedIn Learning course _React.js Essential Training_.
 
 ## Available Scripts
 

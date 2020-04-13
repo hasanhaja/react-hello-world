@@ -16,19 +16,36 @@ const bookList = [
   { title: "The Body", author: "Bill Bryson", pages: 870 },
 ];
 
-const Book = ({ title, author, pages }) => {
+const Book = ({ title, author, pages, freeBookmark }) => {
   return (
     <section>
       <h2>{title}</h2>
       <p>by: {author}</p>
       <p>Pages: {pages} pages</p>
+      <p>Free Bookmark Today: {freeBookmark ? "Yayyy!" : "Nah blud!"}</p>
     </section>
   );
 };
 
-// You need the component to be a class to have State and use the constructor method.
+// This is another syntax to creating components. It just returns the JSX component. Single line functions.
+const Hiring = () => (
+  <div>
+    <p>The library is hiring. Visit www.library.com/jobs for more.</p>
+  </div>
+);
+
+const NotHiring = () => (
+  <div>
+    <p>
+      The library is not hiring. Check back later on www.library.com/jobs for
+      more.
+    </p>
+  </div>
+);
+
+// State should be managed at the root node/component, in this case the Library component so things don't get muddled.
 class Library extends Component {
-  state = { open: false };
+  state = { open: true, freeBookmark: true, hiring: false };
 
   // In order to bind this now, you can use an arrow function. They auto bind.
   toggleOpenClosed = () => {
@@ -42,6 +59,7 @@ class Library extends Component {
     const { books } = this.props;
     return (
       <div>
+        {this.state.hiring ? <Hiring /> : <NotHiring />}
         <h1>The Libary is {this.state.open ? "open" : "closed"}</h1>
         <button onClick={this.toggleOpenClosed}>Open/Close</button>
         {books.map((book, i) => (
@@ -50,6 +68,8 @@ class Library extends Component {
             title={book.title}
             author={book.author}
             pages={book.pages}
+            // Passing down state as a prop to the child.
+            freeBookmark={this.state.freeBookmark}
           />
         ))}
       </div>
