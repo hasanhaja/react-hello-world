@@ -1,93 +1,45 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 
-/**
- * You need to import React in any file using JSX
- */
+const bookList = [
+  { title: "The Sun Also Rises", author: "Ernest Hemingway", pages: 260 },
+  {
+    title: "Harry Potter and the philosopher's stone",
+    author: "J.K. Rowling",
+    pages: 560,
+  },
+  { title: "The power of habits", author: "Charles Duhigg", pages: 287 },
+  { title: "Notes from a small island", author: "Bill Bryson", pages: 190 },
+  { title: "Clojure Explained", author: "Rich Hickey", pages: 230 },
+  { title: "Hamlet", author: "William Shakespeare", pages: 169 },
+  { title: "The Amazing Spider-Man", author: "Stan Lee", pages: 521 },
+  { title: "The Body", author: "Bill Bryson", pages: 870 },
+];
 
-const codeData = {
-  total: 60,
-  javascript: 20,
-  cpp: 25,
-  reason: 15,
-  goal: 200,
-};
-
-const getPercent = (decimal) => {
-  return decimal * 100 + "%";
-};
-
-const calcGoalProgress = (total, goal) => {
-  return getPercent(total / goal);
-};
-
-//const CodeDaysCounter = (props) => {
-const CodeDaysCounter = ({ total, javascript, reason, cpp, goal }) => {
-  //const { total, javascript, reason, cpp, goal } = props;
+const Book = ({ title, author, pages }) => {
   return (
     <section>
-      <div>
-        <p>Total Days: {total}</p>
-      </div>
-      <div>
-        <p>JS Days: {javascript}</p>
-      </div>
-      <div>
-        <p>C++ Days: {cpp}</p>
-      </div>
-      <div>
-        <p>ReasonML Days: {reason}</p>
-      </div>
-      <div>
-        <p>Goal Progress: {calcGoalProgress(total, goal)}</p>
-      </div>
+      <h2>{title}</h2>
+      <p>by: {author}</p>
+      <p>Pages: {pages} pages</p>
     </section>
   );
 };
 
-// // React.Component
-// class CodeDaysCounter extends Component {
-//   getPercent = (decimal) => {
-//     return decimal * 100 + "%";
-//   };
-
-//   calcGoalProgress = (total, goal) => {
-//     return this.getPercent(total / goal);
-//   };
-
-//   render() {
-//     // The order doesn't matter as long as the prop names are the same.
-//     const { total, javascript, reason, cpp, goal } = this.props;
-//     return (
-//       <section>
-//         <div>
-//           <p>Total Days: {total}</p>
-//         </div>
-//         <div>
-//           <p>JS Days: {javascript}</p>
-//         </div>
-//         <div>
-//           <p>C++ Days: {cpp}</p>
-//         </div>
-//         <div>
-//           <p>ReasonML Days: {reason}</p>
-//         </div>
-//         <div>
-//           <p>Goal Progress: {this.calcGoalProgress(total, goal)}</p>
-//         </div>
-//       </section>
-//     );
-//   }
-// }
+const Library = ({ books }) => {
+  return (
+    <div>
+      {books.map((book, i) => (
+        <Book
+          key={i}
+          title={book.title}
+          author={book.author}
+          pages={book.pages}
+        />
+      ))}
+    </div>
+  );
+};
 
 // ReactDOM.render()
-render(
-  <CodeDaysCounter
-    total={codeData.total}
-    javascript={codeData.javascript}
-    cpp={codeData.cpp}
-    reason={codeData.reason}
-    goal={codeData.goal}
-  />,
-  document.getElementById("root")
-);
+render(<Library books={bookList} />, document.getElementById("root"));
